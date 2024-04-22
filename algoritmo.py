@@ -37,11 +37,13 @@ def selecao(populacao, numeros_roleta):
     probabilidades = []
     for aptidao in aptidoes:
         probabilidades.append(round(aptidao / soma_aptidao * 100))
+
     # Descobre quais indivíduos os números da roleta sortearam
+    probabilidades_ordenadas = sorted(enumerate(probabilidades), key=lambda x: x[1])
     selecionados = []
     for num in numeros_roleta:
         lim_superior = 0
-        for i, prob in enumerate(probabilidades):
+        for i, prob in probabilidades_ordenadas:
             lim_superior += prob
             if num < lim_superior:
                 selecionados.append(populacao[i])
@@ -103,7 +105,7 @@ def evoluir(selecionados, selecao_crossover, selecao_mutacao, probabilidade_muta
 
 # Funcao principal
 def main():
-    dominio = [0, 128]
+    dominio = [0, 64]
     tamanho_populacao = 4
     numeros_roleta_selecao = [12, 37, 78, 92]
     selecao_crossover = [1,3,2,4]
